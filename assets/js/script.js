@@ -12,6 +12,11 @@ document.addEventListener("DOMContentLoaded",function(){
             }
         });
     }
+    document.getElementById('answer-box').addEventListener('keydown',function(event){
+        if(event.key === "Enter"){
+            checkAnswer();
+        }
+    });
     runGame("addition");//defualt function to run 
 })
 
@@ -20,6 +25,9 @@ document.addEventListener("DOMContentLoaded",function(){
  * and after user's answer has been processed
  */
 function runGame(gameType){
+
+    document.getElementById('answer-box').value = "";// make answer box empty for new run
+    document.getElementById('answer-box').focus(); // put cursor on input box
     let num1 = Math.floor(Math.random()*25)+1;
     let num2 = Math.floor(Math.random()*25)+1;
 
@@ -68,11 +76,9 @@ function calculateCorrectAnswer(){
         return [operand1 + operand2,"addition"];
     }else if(operator === "X"){
         return [operand1 * operand2,"multi"];
-<<<<<<< HEAD
     }else if(operator === "-"){
         return [operand1 - operand2,"subtract"];
-=======
->>>>>>> d5e0704180a84267c1ccd5e250078fe987ae381a
+
     }else{
         alert("unImplemeneted operator ",operator);
         throw  `unimplemented operator ${operator}`;
