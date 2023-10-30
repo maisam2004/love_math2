@@ -68,8 +68,11 @@ function calculateCorrectAnswer(){
         return [operand1 + operand2,"addition"];
     }else if(operator === "X"){
         return [operand1 * operand2,"multi"];
+<<<<<<< HEAD
     }else if(operator === "-"){
         return [operand1 - operand2,"subtract"];
+=======
+>>>>>>> d5e0704180a84267c1ccd5e250078fe987ae381a
     }else{
         alert("unImplemeneted operator ",operator);
         throw  `unimplemented operator ${operator}`;
