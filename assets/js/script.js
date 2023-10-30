@@ -25,6 +25,10 @@ function runGame(gameType){
 
     if(gameType === "addition"){
         displayAdditionQuestion(num1,num2);
+    }else if(gameType === "multi"){
+        displayMultiQuestion(num1,num2);
+    }else if(gameType === "subtract"){
+        displaySubtractQuestion(num1,num2);
     }else{
         alert("unknown game type");
         throw `unknown game type: ${gameType}.abborting`;
@@ -53,7 +57,7 @@ function checkAnswer(){
 };
 
 /** *
- * get the operands and the oprator(plus ,minus etc)
+ * get the operands and the oprator(plus ,minus ...etc)
  * directly from the Dome, and returns the correct answer.
  */
 function calculateCorrectAnswer(){
@@ -62,6 +66,8 @@ function calculateCorrectAnswer(){
     let operator = document.getElementById('operator').innerText;
     if(operator === "+"){
         return [operand1 + operand2,"addition"];
+    }else if(operator === "X"){
+        return [operand1 * operand2,"multi"];
     }else{
         alert("unImplemeneted operator ",operator);
         throw  `unimplemented operator ${operator}`;
