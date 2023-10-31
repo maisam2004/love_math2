@@ -24,73 +24,86 @@ document.addEventListener("DOMContentLoaded",function(){
  * The main game "loop ",clalled when the script is first loaded
  * and after user's answer has been processed
  */
-function runGame(gameType){
+function runGame(gameType) {
+    document.getElementById('answer-box').value = ""; // make answer box empty for a new run
+    document.getElementById('answer-box').focus(); // put the cursor in the input box
+    let num1 = Math.floor(Math.random() * 25) + 1;
+    let num2 = Math.floor(Math.random() * 25) + 1;
 
-    document.getElementById('answer-box').value = "";// make answer box empty for new run
-    document.getElementById('answer-box').focus(); // put cursor on input box
-    let num1 = Math.floor(Math.random()*25)+1;
-    let num2 = Math.floor(Math.random()*25)+1;
-
-    if(gameType === "addition"){
-        displayAdditionQuestion(num1,num2);
-    }else if(gameType === "multi"){
-        displayMultiQuestion(num1,num2);
-    }else if(gameType === "subtract"){
-        displaySubtractQuestion(num1,num2);
-    }else if(gameType === "division"){
-        displayDivisionQuestion(num1,num2);
-    }else{
-        alert("unknown game type");
-        throw `unknown game type: ${gameType}.abborting`;
+    switch (gameType) {
+        case "addition":
+            displayAdditionQuestion(num1, num2);
+            break;
+        case "multi":
+            displayMultiQuestion(num1, num2);
+            break;
+        case "subtract":
+            displaySubtractQuestion(num1, num2);
+            break;
+        case "division":
+            displayDivisionQuestion(num1, num2);
+            break;
+        default:
+            alert("unknown game type");
+            throw `unknown game type: ${gameType}.aborting`;
     }
+}
 
-};
 
 /**
  * checks the answer against the first element
  * then returned calculator answer array
  */
-function checkAnswer(){
+function checkAnswer() {
     let userAnswer = parseInt(document.getElementById('answer-box').value);
-    let calanswer =calculateCorrectAnswer();
+    let calanswer = calculateCorrectAnswer();
     let isCorrect = calanswer[0] === userAnswer;
 
-    if(isCorrect){
-        
-        alert("Hey you got it right :)")
-        incrementScore();
-    }else{
-        incrementWrongAnswer();
-        alert(`Awww .. You answered ${userAnswer},"but correct answer was ${calanswer[0]}`);
-    }
-    runGame(calanswer[1])
-};
+    isCorrect
+        ? (alert("Hey you got it right :)"), incrementScore())
+        : (incrementWrongAnswer(), alert(`Awww .. You answered ${userAnswer}, but correct answer was ${calanswer[0]}`));
+
+    runGame(calanswer[1]);
+}
+
 
 /** *
  * get the operands and the oprator(plus ,minus ...etc)
  * directly from the Dome, and returns the correct answer.
  */
-function calculateCorrectAnswer(){
+function calculateCorrectAnswer() {
     let operand1 = parseInt(document.getElementById("operand1").innerText);
     let operand2 = parseInt(document.getElementById("operand2").innerText);
     let operator = document.getElementById('operator').innerText;
-    if(operator === "+"){
-        return [operand1 + operand2,"addition"];
-    }else if(operator === "X"){
-        return [operand1 * operand2,"multi"];
-    }else if(operator === "-"){
-        return [operand1 - operand2,"subtract"];
 
-    }else if(operator === "/"){
-        divide= Math.floor(operand1/operand2);
-        return [divide,"division"];
+    let result;
+    let gameType;
 
-    }else{
-        alert("unImplemeneted operator ",operator);
-        throw  `unimplemented operator ${operator}`;
+    switch (operator) {
+        case "+":
+            result = operand1 + operand2;
+            gameType = "addition";
+            break;
+        case "X":
+            result = operand1 * operand2;
+            gameType = "multi";
+            break;
+        case "-":
+            result = operand1 - operand2;
+            gameType = "subtract";
+            break;
+        case "/":
+            result = Math.floor(operand1 / operand2);
+            gameType = "division";
+            break;
+        default:
+            alert("unimplemented operator " + operator);
+            throw `unimplemented operator ${operator}`;
     }
 
-};
+    return [result, gameType];
+}
+
 /**
  * Gets the current score from the Dom and increment by 1
  */
