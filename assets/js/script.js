@@ -37,6 +37,8 @@ function runGame(gameType){
         displayMultiQuestion(num1,num2);
     }else if(gameType === "subtract"){
         displaySubtractQuestion(num1,num2);
+    }else if(gameType === "division"){
+        displayDivisionQuestion(num1,num2);
     }else{
         alert("unknown game type");
         throw `unknown game type: ${gameType}.abborting`;
@@ -79,6 +81,10 @@ function calculateCorrectAnswer(){
     }else if(operator === "-"){
         return [operand1 - operand2,"subtract"];
 
+    }else if(operator === "/"){
+        divide= Math.floor(operand1/operand2);
+        return [divide,"division"];
+
     }else{
         alert("unImplemeneted operator ",operator);
         throw  `unimplemented operator ${operator}`;
@@ -115,6 +121,14 @@ function displayMultiQuestion(num1,num2){
     document.getElementById("operand1").textContent = num1;
     document.getElementById("operand2").textContent = num2;
     document.getElementById("operator").textContent = "X";
+
+
+};
+function displayDivisionQuestion(num1,num2){
+
+    document.getElementById("operand1").textContent = num1*num2;
+    document.getElementById("operand2").textContent = num2 ;
+    document.getElementById("operator").textContent = "/";
 
 
 };
